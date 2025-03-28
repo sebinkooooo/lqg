@@ -6,9 +6,9 @@
   <title>London Quantum Group</title>
   <style>
     body {
-      background-color: #0011ff;
-      color: white;
-      font-family: 'Arial', sans-serif;
+      background-color: #000a1f;
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -16,20 +16,53 @@
       height: 100vh;
       margin: 0;
       text-align: center;
+      padding: 20px;
     }
+
     img {
       width: 100px;
       height: auto;
       margin-bottom: 20px;
     }
+
     h1 {
-      font-size: 2.5em;
-      margin: 0;
+      font-size: 2em;
+      margin-bottom: 0.5em;
+    }
+
+    p {
+      font-size: 1.2em;
+      max-width: 600px;
+      opacity: 0.9;
+    }
+
+    .random-message {
+      font-style: italic;
+      margin: 1em 0;
+      opacity: 0.7;
+    }
+
+    .flicker {
+      animation: flicker 3s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 0.95; }
+      50% { opacity: 0.6; }
     }
   </style>
 </head>
 <body>
-  <img src="image.jpeg" alt="London Quantum Group Logo" />
-  <h1>Welcome to London Quantum Group</h1>
+  <img src="london_quantum_group_logo.jpeg" alt="London Quantum Group Logo" />
+  <h1>This website is in a superposition of all possible states.</h1>
+  <p class="random-message flicker">
+    You could’ve seen: a dancing Schrödinger cat, a portal to the multiverse,  
+    a timeline where everything is made of toast...
+  </p>
+  <p>
+    But your wavefunction collapsed to this empty page.  
+    <br>
+    <strong>London Quantum Group</strong> is still initializing...
+  </p>
 </body>
 </html>
