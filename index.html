@@ -6,17 +6,17 @@
   <title>London Quantum Group</title>
   <style>
     body {
-      background-color: #000a1f;
-      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      background: #0d1117;
+      color: #c9d1d9;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       height: 100vh;
-      margin: 0;
       text-align: center;
-      padding: 20px;
     }
 
     img {
@@ -26,43 +26,64 @@
     }
 
     h1 {
-      font-size: 2em;
-      margin-bottom: 0.5em;
+      font-size: 1.5em;
+      margin-bottom: 1em;
+    }
+
+    .random-thing {
+      font-size: 1.2em;
+      color: #58a6ff;
+      margin-bottom: 1em;
+      transition: opacity 0.5s ease;
+      min-height: 1.5em;
     }
 
     p {
-      font-size: 1.2em;
-      max-width: 600px;
-      opacity: 0.9;
-    }
-
-    .random-message {
-      font-style: italic;
-      margin: 1em 0;
-      opacity: 0.7;
-    }
-
-    .flicker {
-      animation: flicker 3s infinite;
-    }
-
-    @keyframes flicker {
-      0%, 100% { opacity: 0.95; }
-      50% { opacity: 0.6; }
+      font-size: 1em;
+      color: #8b949e;
     }
   </style>
 </head>
 <body>
-  <img src="london_quantum_group_logo.jpeg" alt="London Quantum Group Logo" />
+  <img src="image.jpeg" alt="London Quantum Group Logo" />
   <h1>This website is in a superposition of all possible states.</h1>
-  <p class="random-message flicker">
-    You could’ve seen: a dancing Schrödinger cat, a portal to the multiverse,  
-    a timeline where everything is made of toast...
-  </p>
-  <p>
-    But your wavefunction collapsed to this empty page.  
-    <br>
-    <strong>London Quantum Group</strong> is still initializing...
-  </p>
+  <div>
+    You could’ve landed at: 
+    <span class="random-thing" id="randomThing">a banana museum</span>
+  </div>
+  <p>Instead, your wavefunction collapsed to an empty page.<br/>London Quantum Group is still initializing...</p>
+
+  <script>
+    const things = [
+      "a banana museum",
+      "a page full of raccoon facts",
+      "a chicken live-stream",
+      "a website that only plays kazoo covers of ABBA",
+      "a real-time potato stock market",
+      "a digital jellyfish tank",
+      "a game of rock paper scissors vs an AI",
+      "the secret Netflix for cats",
+      "a goat yelling simulator",
+      "a pizza configurator with philosophical toppings",
+      "a never-ending staircase of ducks",
+      "a reverse Wikipedia (you write the questions)",
+      "a website where every click is a scream",
+      "an existential hotdog roller",
+      "a slideshow of frogs in tiny hats"
+    ];
+
+    const el = document.getElementById("randomThing");
+
+    function updateThing() {
+      const random = things[Math.floor(Math.random() * things.length)];
+      el.style.opacity = 0;
+      setTimeout(() => {
+        el.textContent = random;
+        el.style.opacity = 1;
+      }, 300);
+    }
+
+    setInterval(updateThing, 2500);
+  </script>
 </body>
 </html>
