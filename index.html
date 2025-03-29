@@ -74,6 +74,9 @@
       font-size: 1.2rem;
       color: #0066ff;  /* Blue label to match fireworks/logo */
       margin-bottom: 8px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+      animation-delay: 1s; /* Appear at 1s */
     }
     .punchline {
       font-size: 1.6rem;
@@ -81,7 +84,9 @@
       color: #333;
       min-height: 2.5em;
       margin-bottom: 30px;
-      transition: opacity 0.3s ease;
+      position: relative;
+      overflow: hidden; /* So the rolling text can slide in/out */
+      width: 100%;
     }
     .footer {
       font-size: 1.2rem;
@@ -89,6 +94,31 @@
       max-width: 500px;
       line-height: 1.6;
       margin: 0;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+      animation-delay: 3s; /* Appear at 3s */
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Rolling Animations */
+    .rollOut {
+      animation: rollOut 0.5s forwards;
+    }
+    .rollIn {
+      animation: rollIn 0.5s forwards;
+    }
+
+    @keyframes rollOut {
+      0%   { transform: translateX(0);    opacity: 1; }
+      100% { transform: translateX(-80%); opacity: 0; }
+    }
+    @keyframes rollIn {
+      0%   { transform: translateX(80%); opacity: 0; }
+      100% { transform: translateX(0);    opacity: 1; }
     }
 
     /* Responsive */
@@ -133,35 +163,56 @@
       "You hitting legs"
     ];
 
-    let index = 0;
     const punchlineEl = document.getElementById("punchline");
+    let index = 0;
 
-    /* Show first line quickly */
-    function showFirstLine() {
+    /* Step 1: Show first line after 1.8s (label appears at 1s) */
+    setTimeout(() => {
       punchlineEl.textContent = lines[0];
-    }
+    }, 1800);
 
-    /* Rotate lines every 4s */
-    function startRotation() {
+    /* Step 2: Launch fireworks after first line is visible (~2.2s) */
+    setTimeout(() => {
+      createFirework();
+      createFirework();
+      createFirework();
+    }, 2200);
+
+    /* Step 3: Start rotating lines every 4s after 4s from the first line (~5.8s) */
+    setTimeout(() => {
       index = 1;
       setInterval(() => {
-        punchlineEl.style.opacity = 0;
-        setTimeout(() => {
-          punchlineEl.textContent = lines[index];
-          punchlineEl.style.opacity = 1;
-          index = (index + 1) % lines.length;
-        }, 300);
+        rollNextLine();
       }, 4000);
+    }, 5800);
+
+    /* Rolling text function */
+    function rollNextLine() {
+      const oldText = punchlineEl.textContent;
+      const oldSpan = document.createElement("span");
+      oldSpan.textContent = oldText;
+      oldSpan.classList.add("rollOut");
+      punchlineEl.appendChild(oldSpan);
+
+      setTimeout(() => {
+        punchlineEl.removeChild(oldSpan);
+      }, 500);
+
+      const newSpan = document.createElement("span");
+      newSpan.textContent = lines[index];
+      newSpan.classList.add("rollIn");
+      punchlineEl.appendChild(newSpan);
+
+      index = (index + 1) % lines.length;
+
+      setTimeout(() => {
+        newSpan.classList.remove("rollIn");
+      }, 500);
     }
-
-    /* Timers */
-    setTimeout(showFirstLine, 800);   // Show first line after 0.8s
-    setTimeout(startRotation, 4800);  // Start rotating after 4s of first line
-
   </script>
 
   <script>
-    /* Fireworks logic - single color = #0066ff */
+    /* "Crazy" Fireworks - more frequent, more particles */
     const canvas = document.getElementById("fireworks");
     const ctx = canvas.getContext("2d");
 
@@ -178,13 +229,14 @@
       const x = Math.random() * canvas.width;
       const y = Math.random() * (canvas.height * 0.5);
       const color = "#0066ff"; // Single color matching label/logo
-      for (let i = 0; i < 50; i++) {
+      /* 100 particles for extra craziness */
+      for (let i = 0; i < 100; i++) {
         particles.push({
           x,
           y,
           radius: 2,
           angle: Math.random() * 2 * Math.PI,
-          speed: Math.random() * 3 + 1,
+          speed: Math.random() * 4 + 1,  // faster speeds
           alpha: 1,
           color
         });
@@ -215,10 +267,10 @@
     }
     animateFireworks();
 
-    /* Trigger fireworks every 5s (for a subtle, repeating effect) */
+    /* Fireworks every 1.5s for extra chaos */
     setInterval(() => {
       createFirework();
-    }, 5000);
+    }, 1500);
   </script>
 </body>
 </html>
