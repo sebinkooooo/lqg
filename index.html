@@ -6,74 +6,73 @@
   <title>London Quantum Group</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background-color: #000000;
+      background-color: #000;
       color: white;
       font-family: 'Inter', 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
       text-align: center;
-      overflow: hidden;
+      padding: 20px;
     }
 
     img {
       width: 90px;
-      height: auto;
       margin-bottom: 20px;
-      animation: fadeIn 1s ease-out forwards;
     }
 
     h1 {
-      font-size: 2em;
-      margin-bottom: 40px;
-      font-weight: 600;
-      animation: fadeIn 1.2s ease-out forwards;
+      font-size: 1.4em;
+      font-weight: 400;
+      margin-bottom: 50px;
+      opacity: 0.85;
     }
 
-    .message-container {
-      min-height: 60px;
-      font-size: 1.5em;
-      font-weight: 400;
-      opacity: 0;
-      animation: fadeInOut 6s infinite;
-      max-width: 90%;
+    .highlight {
+      font-size: 1.8em;
+      font-weight: 600;
+      margin-bottom: 30px;
+      min-height: 2em;
+      animation: fadeInOut 4s infinite;
+      transition: opacity 0.5s;
     }
 
     @keyframes fadeInOut {
-      0%   { opacity: 0; transform: translateY(10px); }
-      10%  { opacity: 1; transform: translateY(0); }
-      90%  { opacity: 1; transform: translateY(0); }
+      0% { opacity: 0; transform: translateY(10px); }
+      10% { opacity: 1; transform: translateY(0); }
+      90% { opacity: 1; transform: translateY(0); }
       100% { opacity: 0; transform: translateY(-10px); }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to   { opacity: 1; transform: scale(1); }
+    .footer {
+      font-size: 1em;
+      color: #aaa;
+      max-width: 500px;
+      line-height: 1.5;
     }
 
     @media (max-width: 600px) {
-      h1 {
-        font-size: 1.6em;
-        margin-bottom: 30px;
+      .highlight {
+        font-size: 1.3em;
       }
-
-      .message-container {
-        font-size: 1.2em;
+      h1 {
+        font-size: 1.1em;
       }
     }
   </style>
 </head>
 <body>
   <img src="image.jpeg" alt="London Quantum Group Logo">
-  <h1>London Quantum Group</h1>
-  <div class="message-container" id="message">Loading alternate realities...</div>
+  <h1>You could’ve landed at:</h1>
+  <div class="highlight" id="headline">Loading...</div>
+  <p class="footer">Instead, your wavefunction collapsed to an empty page.<br>London Quantum Group is still initializing...</p>
 
   <script>
-    const messages = [
+    const lines = [
       "A version of “Ordinary” that bridesmaids can walk to",
       "An announcement from TFL making tube fares less expensive",
       "Andrew Tate entering a committed relationship",
@@ -88,20 +87,20 @@
       "You hitting legs"
     ];
 
-    const messageEl = document.getElementById("message");
     let index = 0;
+    const el = document.getElementById("headline");
 
-    function updateMessage() {
-      messageEl.style.opacity = 0;
+    function updateText() {
+      el.style.opacity = 0;
       setTimeout(() => {
-        messageEl.textContent = messages[index];
-        messageEl.style.opacity = 1;
-        index = (index + 1) % messages.length;
-      }, 500);
+        el.textContent = lines[index];
+        el.style.opacity = 1;
+        index = (index + 1) % lines.length;
+      }, 300);
     }
 
-    updateMessage();
-    setInterval(updateMessage, 6000);
+    updateText();
+    setInterval(updateText, 4000);
   </script>
 </body>
 </html>
