@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>London Quantum Group</title>
-  <!-- Modern font -->
+  <!-- Modern Font -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     /* Basic Reset & Background */
     html, body {
-      margin: 0;
+      margin: 0; 
       padding: 0;
       height: 100%;
       background: linear-gradient(180deg, #f9f9f9 0%, #e9e9e9 100%);
@@ -34,21 +34,22 @@
       pointer-events: none;
     }
 
-    /* Container with subtle "card" feel */
+    /* Card Container */
     .card {
       position: relative;
       z-index: 2;
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(8px);
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      border: 1px solid #eee;
       padding: 40px 30px;
       max-width: 700px;
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      animation: fadeInCard 1s ease forwards;
+      animation: fadeInCard 0.8s ease forwards;
     }
 
     @keyframes fadeInCard {
@@ -56,7 +57,7 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Logo + Title */
+    /* Logo & Title */
     .logo {
       width: 80px;
       margin-bottom: 20px;
@@ -65,25 +66,22 @@
       font-size: 2.4rem;
       font-weight: 700;
       margin: 0 0 30px 0;
+      color: #111;
     }
 
-    /* Label + Punchline + Footer */
+    /* Label & Punchline & Footer */
     .label {
       font-size: 1.2rem;
-      color: #777;
+      color: #0066ff;  /* Blue label to match fireworks/logo */
       margin-bottom: 8px;
-      opacity: 0;
-      animation: fadeIn 0.8s ease forwards;
-      animation-delay: 1.5s;
     }
     .punchline {
       font-size: 1.6rem;
       font-weight: 600;
+      color: #333;
       min-height: 2.5em;
       margin-bottom: 30px;
-      opacity: 0;
-      animation: fadeIn 0.8s ease forwards;
-      animation-delay: 2.5s;
+      transition: opacity 0.3s ease;
     }
     .footer {
       font-size: 1.2rem;
@@ -91,14 +89,6 @@
       max-width: 500px;
       line-height: 1.6;
       margin: 0;
-      opacity: 0;
-      animation: fadeIn 0.8s ease forwards;
-      animation-delay: 3.5s;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* Responsive */
@@ -111,7 +101,6 @@
   </style>
 </head>
 <body>
-
   <!-- Fireworks behind everything -->
   <canvas id="fireworks"></canvas>
 
@@ -147,12 +136,12 @@
     let index = 0;
     const punchlineEl = document.getElementById("punchline");
 
-    /* Show first line at 2.5s (animation-delay) + a tiny buffer */
+    /* Show first line quickly */
     function showFirstLine() {
       punchlineEl.textContent = lines[0];
     }
 
-    /* Rotate lines every 6s after a certain delay */
+    /* Rotate lines every 4s */
     function startRotation() {
       index = 1;
       setInterval(() => {
@@ -162,25 +151,17 @@
           punchlineEl.style.opacity = 1;
           index = (index + 1) % lines.length;
         }, 300);
-      }, 6000);
+      }, 4000);
     }
 
-    /* Fireworks after the first line + footer appear -> ~4.5s */
-    function triggerFireworks() {
-      createFirework();
-      createFirework();
-      createFirework();
-    }
-
-    /* Timers for a more natural flow */
-    setTimeout(showFirstLine, 2800);     // Slightly after punchline appears
-    setTimeout(triggerFireworks, 4500);  // Fireworks at 4.5s
-    setTimeout(startRotation, 8000);     // Start rotating lines at 8s
+    /* Timers */
+    setTimeout(showFirstLine, 800);   // Show first line after 0.8s
+    setTimeout(startRotation, 4800);  // Start rotating after 4s of first line
 
   </script>
 
   <script>
-    /* Fireworks logic */
+    /* Fireworks logic - single color = #0066ff */
     const canvas = document.getElementById("fireworks");
     const ctx = canvas.getContext("2d");
 
@@ -196,7 +177,7 @@
     function createFirework() {
       const x = Math.random() * canvas.width;
       const y = Math.random() * (canvas.height * 0.5);
-      const color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+      const color = "#0066ff"; // Single color matching label/logo
       for (let i = 0; i < 50; i++) {
         particles.push({
           x,
@@ -211,7 +192,6 @@
     }
 
     function animateFireworks() {
-      /* Use a slight fade so fireworks linger but also clear eventually */
       ctx.fillStyle = "rgba(249, 249, 249, 0.1)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -234,6 +214,11 @@
       requestAnimationFrame(animateFireworks);
     }
     animateFireworks();
+
+    /* Trigger fireworks every 5s (for a subtle, repeating effect) */
+    setInterval(() => {
+      createFirework();
+    }, 5000);
   </script>
 </body>
 </html>
