@@ -15,7 +15,7 @@
       background: linear-gradient(180deg, #f9f9f9 0%, #e9e9e9 100%);
       font-family: 'Outfit', sans-serif;
       color: #111;
-      overflow: hidden; /* no scrollbars */
+      overflow: hidden;
     }
     body {
       display: flex;
@@ -24,7 +24,6 @@
       text-align: center;
       padding: 20px;
     }
-
     /* Fireworks Canvas */
     canvas {
       position: fixed;
@@ -33,12 +32,11 @@
       z-index: 1;
       pointer-events: none;
     }
-
     /* Card Container */
     .card {
       position: relative;
       z-index: 2;
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255,255,255,0.85);
       backdrop-filter: blur(8px);
       border-radius: 12px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
@@ -51,12 +49,10 @@
       align-items: center;
       animation: fadeInCard 0.8s ease forwards;
     }
-
     @keyframes fadeInCard {
       from { opacity: 0; transform: translateY(15px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     /* Logo & Title */
     .logo {
       width: 80px;
@@ -68,15 +64,14 @@
       margin: 0 0 30px 0;
       color: #111;
     }
-
-    /* Label & Punchline & Footer */
+    /* Label, Punchline, Footer */
     .label {
       font-size: 1.2rem;
-      color: #0066ff;  /* Blue label to match fireworks/logo */
+      color: #0066ff;  /* Blue to match logo/fireworks */
       margin-bottom: 8px;
       opacity: 0;
       animation: fadeIn 0.8s ease forwards;
-      animation-delay: 1s; /* Appear at 1s */
+      animation-delay: 1s;
     }
     .punchline {
       font-size: 1.6rem;
@@ -84,9 +79,8 @@
       color: #333;
       min-height: 2.5em;
       margin-bottom: 30px;
+      overflow: hidden;
       position: relative;
-      overflow: hidden; /* So the rolling text can slide in/out */
-      width: 100%;
     }
     .footer {
       font-size: 1.2rem;
@@ -96,31 +90,27 @@
       margin: 0;
       opacity: 0;
       animation: fadeIn 0.8s ease forwards;
-      animation-delay: 3s; /* Appear at 3s */
+      animation-delay: 3s;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(8px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     /* Rolling Animations */
-    .rollOut {
+    .roll-out {
       animation: rollOut 0.5s forwards;
     }
-    .rollIn {
+    .roll-in {
       animation: rollIn 0.5s forwards;
     }
-
     @keyframes rollOut {
-      0%   { transform: translateX(0);    opacity: 1; }
-      100% { transform: translateX(-80%); opacity: 0; }
+      from { transform: translateX(0); opacity: 1; }
+      to   { transform: translateX(-100%); opacity: 0; }
     }
     @keyframes rollIn {
-      0%   { transform: translateX(80%); opacity: 0; }
-      100% { transform: translateX(0);    opacity: 1; }
+      from { transform: translateX(100%); opacity: 0; }
+      to   { transform: translateX(0); opacity: 1; }
     }
-
     /* Responsive */
     @media (max-width: 600px) {
       .title { font-size: 2rem; margin-bottom: 20px; }
@@ -131,15 +121,14 @@
   </style>
 </head>
 <body>
-  <!-- Fireworks behind everything -->
+  <!-- Fireworks Canvas -->
   <canvas id="fireworks"></canvas>
-
-  <!-- Main content card -->
+  <!-- Main Content Card -->
   <div class="card">
-    <img class="logo" src="image.jpeg" alt="London Quantum Group Logo" />
+    <img class="logo" src="image.jpeg" alt="London Quantum Group Logo">
     <h1 class="title">London Quantum Group</h1>
     <div class="label">You could’ve landed at:</div>
-    <div class="punchline" id="punchline">Loading...</div>
+    <div class="punchline" id="punchline"></div>
     <p class="footer" id="footer">
       Instead, your wavefunction collapsed to an empty page.<br>
       LQG is still initializing...
@@ -147,7 +136,7 @@
   </div>
 
   <script>
-    /* Funny lines to cycle */
+    // Funny lines to cycle
     const lines = [
       "A version of “Ordinary” that bridesmaids can walk to",
       "An announcement from TFL making tube fares less expensive",
@@ -162,91 +151,63 @@
       "IShowSpeed being a Messi fan",
       "You hitting legs"
     ];
-
     const punchlineEl = document.getElementById("punchline");
     let index = 0;
-
-    /* Step 1: Show first line after 1.8s (label appears at 1s) */
+    
+    // Initialize with first line (no "Loading..." text)
     setTimeout(() => {
       punchlineEl.textContent = lines[0];
-    }, 1800);
-
-    /* Step 2: Launch fireworks after first line is visible (~2.2s) */
-    setTimeout(() => {
-      createFirework();
-      createFirework();
-      createFirework();
-    }, 2200);
-
-    /* Step 3: Start rotating lines every 4s after 4s from the first line (~5.8s) */
+    }, 800);
+    
+    // Start rotation every 4s (using roll animation)
     setTimeout(() => {
       index = 1;
       setInterval(() => {
-        rollNextLine();
+        // Animate current text out, then update to new text
+        punchlineEl.classList.add("roll-out");
+        setTimeout(() => {
+          punchlineEl.textContent = lines[index];
+          punchlineEl.classList.remove("roll-out");
+          punchlineEl.classList.add("roll-in");
+          setTimeout(() => {
+            punchlineEl.classList.remove("roll-in");
+          }, 500);
+          index = (index + 1) % lines.length;
+        }, 500);
       }, 4000);
-    }, 5800);
-
-    /* Rolling text function */
-    function rollNextLine() {
-      const oldText = punchlineEl.textContent;
-      const oldSpan = document.createElement("span");
-      oldSpan.textContent = oldText;
-      oldSpan.classList.add("rollOut");
-      punchlineEl.appendChild(oldSpan);
-
-      setTimeout(() => {
-        punchlineEl.removeChild(oldSpan);
-      }, 500);
-
-      const newSpan = document.createElement("span");
-      newSpan.textContent = lines[index];
-      newSpan.classList.add("rollIn");
-      punchlineEl.appendChild(newSpan);
-
-      index = (index + 1) % lines.length;
-
-      setTimeout(() => {
-        newSpan.classList.remove("rollIn");
-      }, 500);
-    }
+    }, 4000);
   </script>
 
   <script>
-    /* "Crazy" Fireworks - more frequent, more particles */
+    // Fireworks Code (Blue fireworks)
     const canvas = document.getElementById("fireworks");
     const ctx = canvas.getContext("2d");
-
     function resize() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
     window.addEventListener("resize", resize);
     resize();
-
     let particles = [];
-
     function createFirework() {
       const x = Math.random() * canvas.width;
       const y = Math.random() * (canvas.height * 0.5);
-      const color = "#0066ff"; // Single color matching label/logo
-      /* 100 particles for extra craziness */
+      const color = "#0066ff"; // Blue color
       for (let i = 0; i < 100; i++) {
         particles.push({
           x,
           y,
           radius: 2,
           angle: Math.random() * 2 * Math.PI,
-          speed: Math.random() * 4 + 1,  // faster speeds
+          speed: Math.random() * 4 + 1,
           alpha: 1,
           color
         });
       }
     }
-
     function animateFireworks() {
       ctx.fillStyle = "rgba(249, 249, 249, 0.1)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
       particles.forEach((p, i) => {
         p.x += Math.cos(p.angle) * p.speed;
         p.y += Math.sin(p.angle) * p.speed;
@@ -262,12 +223,10 @@
           ctx.globalAlpha = 1;
         }
       });
-
       requestAnimationFrame(animateFireworks);
     }
     animateFireworks();
-
-    /* Fireworks every 1.5s for extra chaos */
+    // Trigger fireworks every 1.5s for a crazy effect
     setInterval(() => {
       createFirework();
     }, 1500);
