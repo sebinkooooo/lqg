@@ -4,94 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>London Quantum Group</title>
-  <!-- Use a nice modern font -->
+  <!-- Modern font -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Basic Reset */
+    /* Basic Reset & Background */
     html, body {
-      margin: 0; 
+      margin: 0;
       padding: 0;
-      background: #f9f9f9; 
-      color: #111;
-      font-family: 'Outfit', sans-serif;
       height: 100%;
-      overflow: hidden; /* So no scrollbars appear */
+      background: linear-gradient(180deg, #f9f9f9 0%, #e9e9e9 100%);
+      font-family: 'Outfit', sans-serif;
+      color: #111;
+      overflow: hidden; /* no scrollbars */
     }
-
-    /* Center everything */
     body {
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 20px;
-    }
-
-    .container {
-      max-width: 700px;
-      width: 100%;
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* Logo */
-    img {
-      width: 90px;
-      margin-bottom: 30px;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: 0.5s; /* Show after half a second */
-    }
-
-    /* Big Title: London Quantum Group */
-    h1 {
-      font-size: 2.4rem;
-      font-weight: 700;
-      margin-bottom: 30px;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: 2s; /* Wait 2s before showing */
-    }
-
-    /* "You could’ve landed at..." label */
-    .label {
-      font-size: 1.2rem;
-      color: #777;
-      margin-bottom: 12px;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: 3.5s; /* Show at 3.5s */
-    }
-
-    /* The rotating punchline text */
-    .punchline {
-      font-size: 1.6rem;
-      font-weight: 600;
-      min-height: 2.5em;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: 3.6s; /* We'll update text in JS at 5s */
-    }
-
-    /* The bottom text */
-    .footer {
-      font-size: 1.2rem;
-      color: #555;
-      margin-top: 50px;
-      line-height: 1.6;
-      max-width: 500px;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: 6.5s; /* Show at 6.5s */
-    }
-
-    /* Fade In Keyframes */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* Fireworks Canvas */
@@ -103,30 +34,101 @@
       pointer-events: none;
     }
 
-    /* Responsive Tweaks */
+    /* Container with subtle "card" feel */
+    .card {
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      padding: 40px 30px;
+      max-width: 700px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeInCard 1s ease forwards;
+    }
+
+    @keyframes fadeInCard {
+      from { opacity: 0; transform: translateY(15px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Logo + Title */
+    .logo {
+      width: 80px;
+      margin-bottom: 20px;
+    }
+    .title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin: 0 0 30px 0;
+    }
+
+    /* Label + Punchline + Footer */
+    .label {
+      font-size: 1.2rem;
+      color: #777;
+      margin-bottom: 8px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+      animation-delay: 1.5s;
+    }
+    .punchline {
+      font-size: 1.6rem;
+      font-weight: 600;
+      min-height: 2.5em;
+      margin-bottom: 30px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+      animation-delay: 2.5s;
+    }
+    .footer {
+      font-size: 1.2rem;
+      color: #555;
+      max-width: 500px;
+      line-height: 1.6;
+      margin: 0;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+      animation-delay: 3.5s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
     @media (max-width: 600px) {
-      h1 { font-size: 2rem; }
-      .punchline { font-size: 1.3rem; }
+      .title { font-size: 2rem; margin-bottom: 20px; }
+      .punchline { font-size: 1.3rem; margin-bottom: 24px; }
       .footer { font-size: 1.05rem; }
+      .card { padding: 30px 20px; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Fireworks behind everything -->
   <canvas id="fireworks"></canvas>
 
-  <div class="container">
-    <img src="image.jpeg" alt="London Quantum Group Logo" />
-    <h1>London Quantum Group</h1>
+  <!-- Main content card -->
+  <div class="card">
+    <img class="logo" src="image.jpeg" alt="London Quantum Group Logo" />
+    <h1 class="title">London Quantum Group</h1>
     <div class="label">You could’ve landed at:</div>
     <div class="punchline" id="punchline">Loading...</div>
-    <div class="footer" id="footer">
+    <p class="footer" id="footer">
       Instead, your wavefunction collapsed to an empty page.<br>
       LQG is still initializing...
-    </div>
+    </p>
   </div>
 
   <script>
-    /* The rotating lines array */
+    /* Funny lines to cycle */
     const lines = [
       "A version of “Ordinary” that bridesmaids can walk to",
       "An announcement from TFL making tube fares less expensive",
@@ -145,17 +147,14 @@
     let index = 0;
     const punchlineEl = document.getElementById("punchline");
 
-    /* 
-      We'll show the first line at 5s 
-      Then start rotating them every 7s after 9s 
-      (slower pace for clarity)
-    */
+    /* Show first line at 2.5s (animation-delay) + a tiny buffer */
     function showFirstLine() {
       punchlineEl.textContent = lines[0];
     }
 
+    /* Rotate lines every 6s after a certain delay */
     function startRotation() {
-      index = 1; // Next line will be lines[1]
+      index = 1;
       setInterval(() => {
         punchlineEl.style.opacity = 0;
         setTimeout(() => {
@@ -163,17 +162,25 @@
           punchlineEl.style.opacity = 1;
           index = (index + 1) % lines.length;
         }, 300);
-      }, 7000); // 7s interval
+      }, 6000);
     }
 
-    /* Timers for a more thoughtful pace */
-    setTimeout(showFirstLine, 5000);     // At 5s, show first line
-    setTimeout(startRotation, 9000);     // At 9s, begin rotation
+    /* Fireworks after the first line + footer appear -> ~4.5s */
+    function triggerFireworks() {
+      createFirework();
+      createFirework();
+      createFirework();
+    }
+
+    /* Timers for a more natural flow */
+    setTimeout(showFirstLine, 2800);     // Slightly after punchline appears
+    setTimeout(triggerFireworks, 4500);  // Fireworks at 4.5s
+    setTimeout(startRotation, 8000);     // Start rotating lines at 8s
 
   </script>
 
   <script>
-    /* Simple fireworks effect, triggered AFTER first line is visible */
+    /* Fireworks logic */
     const canvas = document.getElementById("fireworks");
     const ctx = canvas.getContext("2d");
 
@@ -204,6 +211,7 @@
     }
 
     function animateFireworks() {
+      /* Use a slight fade so fireworks linger but also clear eventually */
       ctx.fillStyle = "rgba(249, 249, 249, 0.1)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -225,20 +233,7 @@
 
       requestAnimationFrame(animateFireworks);
     }
-
     animateFireworks();
-
-    /* Fireworks after the user sees the first line (7.5s) */
-    setTimeout(() => {
-      createFirework();
-      createFirework();
-      createFirework();
-    }, 7500);
-
-    /* Maybe repeat fireworks every 12s if you want more? */
-    // setInterval(() => {
-    //   createFirework();
-    // }, 12000);
   </script>
 </body>
 </html>
