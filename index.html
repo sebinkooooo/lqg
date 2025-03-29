@@ -67,7 +67,7 @@
     /* Label, Punchline, Footer */
     .label {
       font-size: 1.2rem;
-      color: #0066ff;  /* Blue to match logo/fireworks */
+      color: #0066ff;
       margin-bottom: 8px;
       opacity: 0;
       animation: fadeIn 0.8s ease forwards;
@@ -79,8 +79,7 @@
       color: #333;
       min-height: 2.5em;
       margin-bottom: 30px;
-      overflow: hidden;
-      position: relative;
+      transition: opacity 0.3s ease-in-out;
     }
     .footer {
       font-size: 1.2rem;
@@ -95,21 +94,6 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(8px); }
       to   { opacity: 1; transform: translateY(0); }
-    }
-    /* Rolling Animations */
-    .roll-out {
-      animation: rollOut 0.5s forwards;
-    }
-    .roll-in {
-      animation: rollIn 0.5s forwards;
-    }
-    @keyframes rollOut {
-      from { transform: translateX(0); opacity: 1; }
-      to   { transform: translateX(-100%); opacity: 0; }
-    }
-    @keyframes rollIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to   { transform: translateX(0); opacity: 1; }
     }
     /* Responsive */
     @media (max-width: 600px) {
@@ -159,27 +143,22 @@
       punchlineEl.textContent = lines[0];
     }, 800);
     
-    // Start rotation every 4s (using roll animation)
+    // Start rotation every 4s using a fade-out/fade-in transition
     setTimeout(() => {
       index = 1;
       setInterval(() => {
-        // Animate current text out, then update to new text
-        punchlineEl.classList.add("roll-out");
+        punchlineEl.style.opacity = 0;
         setTimeout(() => {
           punchlineEl.textContent = lines[index];
-          punchlineEl.classList.remove("roll-out");
-          punchlineEl.classList.add("roll-in");
-          setTimeout(() => {
-            punchlineEl.classList.remove("roll-in");
-          }, 500);
+          punchlineEl.style.opacity = 1;
           index = (index + 1) % lines.length;
-        }, 500);
+        }, 300);
       }, 4000);
     }, 4000);
   </script>
 
   <script>
-    // Fireworks Code (Blue fireworks)
+    // Fireworks Code - Crazy blue fireworks
     const canvas = document.getElementById("fireworks");
     const ctx = canvas.getContext("2d");
     function resize() {
@@ -192,7 +171,8 @@
     function createFirework() {
       const x = Math.random() * canvas.width;
       const y = Math.random() * (canvas.height * 0.5);
-      const color = "#0066ff"; // Blue color
+      const color = "#0066ff"; // Blue color matching logo
+      // More particles for extra crazy effect
       for (let i = 0; i < 100; i++) {
         particles.push({
           x,
