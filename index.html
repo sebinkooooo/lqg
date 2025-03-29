@@ -1,89 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>London Quantum Group</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background: #0d1117;
-      color: #c9d1d9;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      background-color: #f9f9f9;
+      color: #222;
       text-align: center;
+      padding: 20px;
     }
 
     img {
-      width: 100px;
+      width: 80px;
       height: auto;
       margin-bottom: 20px;
     }
 
     h1 {
-      font-size: 1.5em;
-      margin-bottom: 1em;
+      font-size: 2.4em;
+      color: #111;
+      margin-bottom: 30px;
     }
 
-    .random-thing {
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    li {
+      background: #fff;
+      margin: 12px 0;
+      padding: 15px 20px;
+      border-radius: 12px;
       font-size: 1.2em;
-      color: #58a6ff;
-      margin-bottom: 1em;
-      transition: opacity 0.5s ease;
-      min-height: 1.5em;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     }
 
-    p {
-      font-size: 1em;
-      color: #8b949e;
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8em;
+      }
+      li {
+        font-size: 1.05em;
+        padding: 12px 16px;
+      }
     }
   </style>
 </head>
 <body>
-  <img src="image.jpeg" alt="London Quantum Group Logo" />
-  <h1>This website is in a superposition of all possible states.</h1>
-  <div>
-    You could’ve landed at: 
-    <span class="random-thing" id="randomThing">a banana museum</span>
-  </div>
-  <p>Instead, your wavefunction collapsed to an empty page.<br/>London Quantum Group is still initializing...</p>
-
-  <script>
-    const things = [
-      "a banana museum",
-      "a page full of raccoon facts",
-      "a chicken live-stream",
-      "a website that only plays kazoo covers of ABBA",
-      "a real-time potato stock market",
-      "a digital jellyfish tank",
-      "a game of rock paper scissors vs an AI",
-      "the secret Netflix for cats",
-      "a goat yelling simulator",
-      "a pizza configurator with philosophical toppings",
-      "a never-ending staircase of ducks",
-      "a reverse Wikipedia (you write the questions)",
-      "a website where every click is a scream",
-      "an existential hotdog roller",
-      "a slideshow of frogs in tiny hats"
-    ];
-
-    const el = document.getElementById("randomThing");
-
-    function updateThing() {
-      const random = things[Math.floor(Math.random() * things.length)];
-      el.style.opacity = 0;
-      setTimeout(() => {
-        el.textContent = random;
-        el.style.opacity = 1;
-      }, 300);
-    }
-
-    setInterval(updateThing, 2500);
-  </script>
+  <img src="image.jpeg" alt="London Quantum Group Logo">
+  <h1>London Quantum Group</h1>
+  <ul>
+    <li>A version of “Ordinary” that bridesmaids can walk to</li>
+    <li>An announcement from TFL making tube fares less expensive</li>
+    <li>Andrew Tate entering a committed relationship</li>
+    <li>Your ChatGPT history being leaked</li>
+    <li>The TikTok tarot lady actually telling the truth</li>
+    <li>A 9-year-old’s TikTok initials combo being accurate</li>
+    <li>A 6-hour guided morning routine by Ashton Hall</li>
+    <li>Elon Musk quitting social media</li>
+    <li>Piers Morgan letting his guests finish a sentence</li>
+    <li>You not fumbling the 10/10</li>
+    <li>IShowSpeed being a Messi fan</li>
+    <li>You hitting legs</li>
+  </ul>
 </body>
 </html>
