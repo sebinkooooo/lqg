@@ -17,59 +17,59 @@
       justify-content: center;
       height: 100vh;
       text-align: center;
-      padding: 20px;
+      padding: 30px 20px;
     }
 
     img {
       width: 90px;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
     }
 
-    h1 {
-      font-size: 1.4em;
-      font-weight: 400;
-      margin-bottom: 50px;
-      opacity: 0.85;
+    .header {
+      font-size: 1.6em;
+      font-weight: 500;
+      color: #ccc;
+      margin-bottom: 16px;
     }
 
     .highlight {
-      font-size: 1.8em;
-      font-weight: 600;
-      margin-bottom: 30px;
-      min-height: 2em;
-      animation: fadeInOut 4s infinite;
-      transition: opacity 0.5s;
-    }
-
-    @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateY(10px); }
-      10% { opacity: 1; transform: translateY(0); }
-      90% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-10px); }
+      font-size: 2em;
+      font-weight: 700;
+      color: #fff;
+      min-height: 2.5em;
+      margin-bottom: 40px;
+      transition: opacity 0.3s;
     }
 
     .footer {
-      font-size: 1em;
-      color: #aaa;
-      max-width: 500px;
+      font-size: 1.05em;
+      color: #888;
       line-height: 1.5;
+      max-width: 500px;
     }
 
     @media (max-width: 600px) {
-      .highlight {
+      .header {
         font-size: 1.3em;
       }
-      h1 {
-        font-size: 1.1em;
+      .highlight {
+        font-size: 1.5em;
+      }
+      .footer {
+        font-size: 1em;
       }
     }
   </style>
 </head>
 <body>
   <img src="image.jpeg" alt="London Quantum Group Logo">
-  <h1>You could’ve landed at:</h1>
-  <div class="highlight" id="headline">Loading...</div>
-  <p class="footer">Instead, your wavefunction collapsed to an empty page.<br>London Quantum Group is still initializing...</p>
+  <div class="header">You could’ve landed at:</div>
+  <div class="highlight" id="headline">Loading multiverse...</div>
+  <div class="footer">
+    Instead, your wavefunction collapsed to an empty page.<br>
+    <strong>London Quantum Group</strong> is still initializing...
+  </div>
 
   <script>
     const lines = [
